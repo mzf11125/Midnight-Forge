@@ -1,0 +1,26 @@
+circuit Counter {
+    state count: Field;
+    state owner: Address;
+
+    pub fn new(initial: Field, owner_addr: Address) {
+        self.count = initial;
+        self.owner = owner_addr;
+    }
+
+    pub fn increment() {
+        self.count = self.count + 1;
+    }
+
+    pub fn decrement() {
+        require(self.count > 0, "Cannot decrement below zero");
+        self.count = self.count - 1;
+    }
+
+    pub fn get() -> Field {
+        return self.count;
+    }
+
+    circuit privateIncrement(private x: Field) {
+        self.count = self.count + x;
+    }
+}

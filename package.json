@@ -1,0 +1,32 @@
+{
+  "name": "midnight-forge",
+  "version": "0.1.0",
+  "description": "Testing, security, and profiling framework for Compact smart contracts on Midnight Network",
+  "main": "dist/cli.js",
+  "bin": {
+    "midnight-forge": "./dist/cli.js",
+    "forge": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/cli.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": ["midnight", "compact", "testing", "security", "blockchain"],
+  "author": "Midnight Forge Contributors",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "commander": "^11.1.0",
+    "chalk": "^4.1.2",
+    "glob": "^10.3.10",
+    "@iarna/toml": "^2.2.5"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/node": "^20.10.6",
+    "ts-node": "^10.9.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

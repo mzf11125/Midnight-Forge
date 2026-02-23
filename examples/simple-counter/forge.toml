@@ -1,0 +1,16 @@
+[project]
+name = "simple-counter"
+version = "0.1.0"
+
+[compiler]
+path = "compact"
+
+[test]
+include = ["**/*.compact", "**/*.forge.test"]
+exclude = ["node_modules/**"]
+parallel = true
+workers = 4
+
+[scan]
+severity = "warning"
+rules = ["all"]

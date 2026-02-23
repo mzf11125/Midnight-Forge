@@ -1,0 +1,44 @@
+use std::test::*;
+import "Counter.compact";
+
+test_suite "Counter tests" {
+    test "increment adds one" {
+        let contract = deploy(Counter, count: 0, owner: msg.sender);
+        contract.increment();
+        assert_eq!(contract.get(), 1);
+    }
+
+    test "decrement subtracts one" {
+        let contract = deploy(Counter, count: 5, owner: msg.sender);
+        contract.decrement();
+        assert_eq!(contract.get(), 4);
+    }
+
+    test "decrement fails at zero" {
+        let contract = deploy(Counter, count: 0, owner: msg.sender);
+        expect_revert!({
+            contract.decrement();
+        }, "Cannot decrement below zero");
+    }
+
+    test "multiple increments" {
+        let contract = deploy(Counter, count: 0, owner: msg.sender);
+        contract.increment();
+        contract.increment();
+        contract.increment();
+        assert_eq!(contract.get(), 3);
+    }
+
+    circuit_test "private increment proof" {
+        let contract = deploy(Counter, count: 0, owner: msg.sender);
+        let private_value: Field = 42;
+        
+        let proof = execute_circuit!(
+            contract.privateIncrement,
+            private: (private_value,)
+        );
+        
+        assert_valid_proof!(proof);
+        assert_eq!(contract.get(), 42);
+    }
+}
